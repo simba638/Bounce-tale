@@ -1,51 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bounce Tales Web Play</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #111;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        flex-direction: column;
-    }
-    button {
-        padding: 15px 25px;
-        font-size: 18px;
-        border: none;
-        background: #ff4c4c;
-        color: white;
-        cursor: pointer;
-        border-radius: 8px;
-    }
-    iframe {
-        width: 90%;
-        height: 90vh;
-        border: none;
-        display: none;
-    }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bounce Tales — Play in Browser</title>
+  <style>
+    body { margin: 0; background: #111; color: #fff; text-align: center; font-family: sans-serif; }
+    #playBtn { margin-top: 30px; padding: 15px 30px; font-size: 18px; border: none; background: #e63946; color: #fff; border-radius: 8px; cursor: pointer; }
+    #gameCanvas { display: none; width: 100%; height: auto; max-width: 360px; margin: 20px auto; border: 2px solid #444; }
+    footer { color: #aaa; font-size: 14px; margin: 20px 0; }
+  </style>
 </head>
 <body>
+  <h1>Bounce Tales</h1>
+  <button id="playBtn">Play Game</button>
+  <canvas id="gameCanvas"></canvas>
+  <footer>@Faiz. All rights reserved</footer>
 
-<h1>Bounce Tales</h1>
-<button id="playBtn">Play Game</button>
+  <!-- J2meJS emulator script -->
+  <script src="https://rosabis.github.io/J2meJS/js/j2me.min.js"></script>
 
-<iframe id="gameFrame"></iframe>
+  <script>
+    document.getElementById('playBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('playBtn');
+      btn.style.display = 'none';
 
-<script>
-document.getElementById("playBtn").addEventListener("click", function() {
-    this.style.display = "none";
-    document.getElementById("gameFrame").style.display = "block";
-    document.getElementById("gameFrame").src = "https://j2me.js.org/?url=bounce-tales.jar";
-});
-</script>
+      const canvas = document.getElementById('gameCanvas');
+      canvas.style.display = 'block';
 
+      const jarResponse = await fetch('bounce-tales.jar');
+      const jarBuffer = await jarResponse.arrayBuffer();
+
+      const loader = new J2meLoader({
+        canvas: canvas,
+        jar: new Uint8Array(jarBuffer),
+        onload: () => console.log('Game loaded!'),
+        onerror: e => console.error('Failed to load game:', e)
+      });
+
+      loader.start();
+    });
+  </script>
 </body>
 </html>
