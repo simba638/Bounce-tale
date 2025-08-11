@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bounce Tales Web Play</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #111;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+    }
+    button {
+        padding: 15px 25px;
+        font-size: 18px;
+        border: none;
+        background: #ff4c4c;
+        color: white;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+    iframe {
+        width: 90%;
+        height: 90vh;
+        border: none;
+        display: none;
+    }
+</style>
+</head>
+<body>
+
+<h1>Bounce Tales</h1>
+<button id="playBtn">Play Game</button>
+
+<iframe id="gameFrame"></iframe>
+
+<script>
+document.getElementById("playBtn").addEventListener("click", function() {
+    this.style.display = "none";
+    document.getElementById("gameFrame").style.display = "block";
+    document.getElementById("gameFrame").src = "https://j2me.js.org/?url=bounce-tales.jar";
+});
+</script>
+
+</body>
+</html>
